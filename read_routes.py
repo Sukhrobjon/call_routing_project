@@ -36,7 +36,8 @@ def reading_phone_numbers(file_name):
 
 def call_costs():
     """Return a price for each phone number"""
-    call_cost = tuple()
+    phone_number, price = 0, 0
+    call_cost = [phone_number, price]
     
     # file_paths 
     route_costs_4 = "project/data/route-costs-4.txt"
@@ -44,14 +45,17 @@ def call_costs():
     # route_costs_10 = "project/data/route-costs-100.txt"
     # phone_numbers_10 = "project/data/phone-numbers-100.txt"
 
+    
     # read routes and phone numbers
     route_costs = reading_route(route_costs_4)
-    # phone_numbers = reading_phone_numbers(phone_numbers_3)
-    
+    # create a trie with all the routes
     route = TrieTree(route_costs)
-    print(route.size)
-    
-    return call_cost
+    # # read phone numbers
+    # phone_numbers = reading_phone_numbers(phone_numbers_3)
+    phone_num_price = route.search("19876543210")
+    print("size of trie: ", route.size)
+    print(phone_num_price)
+    # return call_cost
 
 
 def main():

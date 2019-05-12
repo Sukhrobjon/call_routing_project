@@ -30,6 +30,7 @@ class TrieTree(object):
         if routes != None:
             for route, price in routes.items():
                 self.add(route, price)
+                self.size += 1
      
     def __repr__(self):
         "return A string represention of the Trie tree"
@@ -39,26 +40,27 @@ class TrieTree(object):
         """Add the new digit as node"""
         
         node = self.root
-        print("root: ", node)
+        # print("root: ", node)
         for index, digit in enumerate(route_number):
             
             if node.children[int(digit)] == None:
                 node.children[int(digit)] = TrieNode()
                 node.digit = int(digit)
         
-                self.size += 1
+                # self.size += 1
                 # print(node.digit)
-                node.price = price
+                
             # if we hit the last digit in route we break out of loop don't update node 
 
             if index == len(route_number)-1:
+                node.price = price
                 node.end_path = True
                 break 
             # updating the node
             node = node.children[int(digit)] 
             
 
-        # print("last node: {}, node.digit: {} price: {}".format(node, node.digit, node.price))
+        print("last node: {}, node.digit: {} price: {}".format(node, node.digit, node.price))
     def search(self, phone_number):
         """Return a price for givin phone number searching through Trie structured routes"""
         # start at the root
@@ -68,23 +70,27 @@ class TrieTree(object):
             # check if node exists where digit equals index
             if node.children[int(digit)] != None: 
                 price = node.price
+                print("each node price:", node.price)
+                
                 node = node.children[int(digit)]
             else: # first unmatch digit and we break
+                print("else each node price:", node.price)
                 break 
         # return the price of last node
+        # print(node.price)
         return price
         
 if __name__ == "__main__":
-    route = '1415'
+    route = '1512'
     price = '0.04'
-    price_longer = '0.02'
-    route_longer = '1415234'
-    phone_number = '14152345678'
-    obj = TrieTree()
-    obj.add(route_longer, price_longer)
-    # obj.add(route, price)
-    
-    print(obj)
+  
+    price_longer = '0.01'
+    route_longer = '1415246'
+
+    phone_number = '15124156620'  # return 0.04
+    # phone_num = ''
+    obj = TrieTree({route_longer: price_longer, route: price})
+
 
     # Testing search
 
