@@ -1,5 +1,5 @@
 # reading the file
-
+from trie_tree import TrieTree
 def reading_route(file_name):
     '''
     Reading the route costs from the text file and return
@@ -34,25 +34,38 @@ def reading_phone_numbers(file_name):
     return f
 
 
-def call_costs(route_costs, phone_numbers):
+def call_costs():
     """Return a price for each phone number"""
     call_cost = tuple()
     
-    
-    return call_cost
-
-
-def main():
+    # file_paths 
     route_costs_4 = "project/data/route-costs-4.txt"
     phone_numbers_3 = "project/data/phone-numbers-3.txt"
     # route_costs_10 = "project/data/route-costs-100.txt"
     # phone_numbers_10 = "project/data/phone-numbers-100.txt"
 
-    call_costs = reading_route(route_costs_4)
-    print(len(call_costs))
-    phone_numbers = reading_phone_numbers(phone_numbers_3)
-    print(len(phone_numbers))
+    # read routes and phone numbers
+    route_costs = reading_route(route_costs_4)
+    # phone_numbers = reading_phone_numbers(phone_numbers_3)
+    
+    route = TrieTree(route_costs)
+    print(route.size)
+    
+    return call_cost
+
+
+def main():
+    # route_costs_4 = "project/data/route-costs-4.txt"
+    # phone_numbers_3 = "project/data/phone-numbers-3.txt"
+    # # route_costs_10 = "project/data/route-costs-100.txt"
+    # # phone_numbers_10 = "project/data/phone-numbers-100.txt"
+
+    # call_costs = reading_route(route_costs_4)
+    # print(len(call_costs))
+    # phone_numbers = reading_phone_numbers(phone_numbers_3)
+    # print(len(phone_numbers))
+    pass
 
 
 if __name__ == "__main__":
-    main()
+    call_costs()
