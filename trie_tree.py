@@ -47,24 +47,17 @@ class TrieTree(object):
                 # sake of keeping track of digits
                 node.digit = int(digit)
                 
-            # if we hit the last digit in route we break out of loop don't update node 
+            # check if we are at the end of the route number 
             if index == len(route_number)-1:
-
-                print("Nathan")
-
-                # print("finding min: price: {}, node.price: {}".format(price, node.price))
+                # check if the price the minimum we want to store the cheapest 
                 if node.price == 0 or float(price) < node.price:
-                    print("price comparision")
                     node.price = float(price)
-                    break
-    
+                # we are end of the path
                 node.end_path = True
                 break 
             # updating the node
             node = node.children[int(digit)] 
             
-
-        # print("last node: {}, node.digit: {} price: {}".format(node, node.digit, node.price))
     def search(self, phone_number):
         """Return a price for givin phone number searching through Trie structured routes"""
         # start at the root
