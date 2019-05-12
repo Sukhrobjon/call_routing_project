@@ -28,8 +28,8 @@ class TrieTree(object):
         self.root = TrieNode()
         self.size = 0
         if routes != None:
-            for route, price in routes.items():
-                self.add(route, price)
+            for route in routes:
+                self.add(route[0], route[1])
                 self.size += 1
      
     def __repr__(self):
@@ -38,29 +38,33 @@ class TrieTree(object):
 
     def add(self, route_number, price):
         """Add the new digit as node"""
-        
         node = self.root
         # print("root: ", node)
         for index, digit in enumerate(route_number):
             
             if node.children[int(digit)] == None:
                 node.children[int(digit)] = TrieNode()
+                # sake of keeping track of digits
                 node.digit = int(digit)
-        
-                # self.size += 1
-                # print(node.digit)
                 
             # if we hit the last digit in route we break out of loop don't update node 
-
             if index == len(route_number)-1:
-                node.price = price
+
+                print("Nathan")
+
+                # print("finding min: price: {}, node.price: {}".format(price, node.price))
+                if node.price == 0 or float(price) < node.price:
+                    print("price comparision")
+                    node.price = float(price)
+                    break
+    
                 node.end_path = True
                 break 
             # updating the node
             node = node.children[int(digit)] 
             
 
-        print("last node: {}, node.digit: {} price: {}".format(node, node.digit, node.price))
+        # print("last node: {}, node.digit: {} price: {}".format(node, node.digit, node.price))
     def search(self, phone_number):
         """Return a price for givin phone number searching through Trie structured routes"""
         # start at the root
@@ -69,28 +73,30 @@ class TrieTree(object):
         for digit in phone_number:
             # check if node exists where digit equals index
             if node.children[int(digit)] != None: 
+                # setting the price before we see the fisrt unmatch
                 price = node.price
-                print("each node price:", node.price)
+                # print("each node price:", node.price)
                 
                 node = node.children[int(digit)]
             else: # first unmatch digit and we break
-                print("else each node price:", node.price)
+                # print("else each node price:", node.price)
                 break 
         # return the price of last node
         # print(node.price)
         return price
         
 if __name__ == "__main__":
-    route = '1512'
-    price = '0.04'
-  
-    price_longer = '0.01'
-    route_longer = '1415246'
+    
+    price_1 = '0.01'
+    route_1 = '1415'
+    
+    route_2 = '1415'
+    price_2 = '0.02'
 
-    phone_number = '15124156620'  # return 0.04
+    phone_number = '14153186370'  # return 0.01
     # phone_num = ''
-    obj = TrieTree({route_longer: price_longer, route: price})
-
+    obj = TrieTree([[route_1, price_1], [route_2, price_2]])
+    print(obj.size)
 
     # Testing search
 
