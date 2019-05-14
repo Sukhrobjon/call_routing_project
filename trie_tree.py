@@ -69,13 +69,11 @@ class TrieTree(object):
                 # setting the price before we see the fisrt unmatch
                 price = node.price
                 # print("each node price:", node.price)
-                
                 node = node.children[int(digit)]
             else: # first unmatch digit and we break
                 # print("else each node price:", node.price)
                 break 
         # return the price of last node
-        # print(node.price)
         return price
         
 if __name__ == "__main__":
@@ -83,10 +81,10 @@ if __name__ == "__main__":
     price_1 = '0.01'
     route_1 = '1415'
     
-    route_2 = '1415'
+    route_2 = '1415234'
     price_2 = '0.02'
 
-    phone_number = '14153186370'  # return 0.01
+    phone_number = '14152346370'  # return 0.01
     # phone_num = ''
     obj = TrieTree([[route_1, price_1], [route_2, price_2]])
     print(obj.size)
