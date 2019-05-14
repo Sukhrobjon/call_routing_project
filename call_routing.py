@@ -1,27 +1,46 @@
 # reading the file
 from trie_tree import TrieTree
-def reading_route(file_name):
+# def reading_route(file_name):
+#     '''
+#     Reading the route costs from the text file and return
+#     dictionary {route#: cost}
+#     '''
+#     with open(file_name) as f:
+#         dict_of_routes = dict()
+
+#         for line in f:
+#             pair = line.strip().split(',')
+#             pair[0] = pair[0].replace('+', '')
+#             dict_of_routes[pair[0]] = pair[1]
+
+#             # slicing
+#             # dict_of_routes[pair[0][1:]] = pair[1]
+#             # print(pair)
+        
+#         # d = dict(line.strip().split(',') for line in f)
+#         # return d
+
+#     return dict_of_routes
+
+
+def load_routes(file_name):
     '''
     Reading the route costs from the text file and return
     dictionary {route#: cost}
     '''
     with open(file_name) as f:
-        dict_of_routes = dict()
 
         for line in f:
             pair = line.strip().split(',')
-            pair[0] = pair[0].replace('+', '')
-            dict_of_routes[pair[0]] = pair[1]
+            route = pair[0].replace('+', '')
+            price = pair[1]
 
-            # slicing
-            # dict_of_routes[pair[0][1:]] = pair[1]
-            # print(pair)
-        
-        # d = dict(line.strip().split(',') for line in f)
-        # return d
+            route_and_price = [route, price]
+            print(route_and_price)
 
-    return dict_of_routes
+            # route_tree = TrieTree(route_and_price)
 
+    # return route_tree
 
 def reading_phone_numbers(file_name):
     '''

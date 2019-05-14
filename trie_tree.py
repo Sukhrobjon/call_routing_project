@@ -7,10 +7,8 @@ class TrieNode(object):
         
         # initializing 10 children for each node because there are 10 digits possible
         self.children = [None] * 10
-        #      
+        # default price is 0     
         self.price = 0
-        
-        
         # to indicate we traverse all the digits in the route
         self.end_path = False
 
