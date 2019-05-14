@@ -28,7 +28,7 @@ class TrieTree(object):
         if routes != None:
             for route in routes:
                 self.add(route[0], route[1])
-                self.size += 1
+                # self.size += 1
      
     def __repr__(self):
         "return A string represention of the Trie tree"
@@ -38,18 +38,22 @@ class TrieTree(object):
         """Add the new digit as node"""
         node = self.root
         # print("root: ", node)
+
+        self.size += 1
+
         for index, digit in enumerate(route_number):
             
             if node.children[int(digit)] == None:
                 node.children[int(digit)] = TrieNode()
                 # sake of keeping track of digits
+
                 node.digit = int(digit)
                 
             # check if we are at the end of the route number 
             if index == len(route_number)-1:
                 # check if the price the minimum we want to store the cheapest 
-                if node.price == 0 or float(price) < node.price:
-                    node.price = float(price)
+                if node.price == 0 or price < node.price:
+                    node.price = price
                 # we are end of the path
                 node.end_path = True
                 break 

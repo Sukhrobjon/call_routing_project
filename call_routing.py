@@ -1,46 +1,51 @@
 # reading the file
 from trie_tree import TrieTree
-# def reading_route(file_name):
-#     '''
-#     Reading the route costs from the text file and return
-#     dictionary {route#: cost}
-#     '''
-#     with open(file_name) as f:
-#         dict_of_routes = dict()
-
-#         for line in f:
-#             pair = line.strip().split(',')
-#             pair[0] = pair[0].replace('+', '')
-#             dict_of_routes[pair[0]] = pair[1]
-
-#             # slicing
-#             # dict_of_routes[pair[0][1:]] = pair[1]
-#             # print(pair)
-        
-#         # d = dict(line.strip().split(',') for line in f)
-#         # return d
-
-#     return dict_of_routes
 
 
-def load_routes(file_name):
+def read_routes(file_name):
     '''
     Reading the route costs from the text file and return
     dictionary {route#: cost}
     '''
     with open(file_name) as f:
 
+        list_of_routes = list()
+
         for line in f:
             pair = line.strip().split(',')
             route = pair[0].replace('+', '')
             price = pair[1]
 
-            route_and_price = [route, price]
-            print(route_and_price)
+            list_of_routes.append([route, price])
 
-            # route_tree = TrieTree(route_and_price)
+            # route_tree.add(route_and_price[0], route_and_price[1])
 
-    # return route_tree
+        print(len(list_of_routes))
+
+    return list_of_routes
+
+
+def load_routes(routes_and_prices):
+    '''
+    Load the routes from list of list into trie tree
+    '''
+
+    route_tree = TrieTree()
+    # i = 0
+    # while i < len(routes_and_prices) - 1:
+    #     route = routes_and_prices[i][i]
+    #     price = float(routes_and_prices[i][i+1])
+    #     route_tree.add(route, price)
+    #     i += 2
+
+    for pair in routes_and_prices:
+        route = pair[0]
+        price = float(pair[1])
+        route_tree.add(route, price)
+
+    print("route_tree: ", route_tree.size)
+    return route_tree.size
+
 
 def reading_phone_numbers(file_name):
     '''
@@ -55,40 +60,23 @@ def reading_phone_numbers(file_name):
 
 def call_costs():
     """Return a price for each phone number"""
-    phone_number, price = 0, 0
-    call_cost = [phone_number, price]
-    
-    # file_paths 
-    route_costs_4 = "project/data/route-costs-4.txt"
-    phone_numbers_3 = "project/data/phone-numbers-3.txt"
-    # route_costs_10 = "project/data/route-costs-100.txt"
+    route_costs_100 = "project/data/route-costs-100.txt"
     # phone_numbers_10 = "project/data/phone-numbers-100.txt"
 
+    routes_and_prices = read_routes(route_costs_100)
+    route_tree = load_routes(routes_and_prices)
     
-    # read routes and phone numbers
-    route_costs = reading_route(route_costs_4)
-    # create a trie with all the routes
-    route = TrieTree(route_costs)
-    # # read phone numbers
-    # phone_numbers = reading_phone_numbers(phone_numbers_3)
-    phone_num_price = route.search("19876543210")
-    print("size of trie: ", route.size)
-    print(phone_num_price)
-    # return call_cost
+    return route_tree
 
-
-def main():
-    # route_costs_4 = "project/data/route-costs-4.txt"
-    # phone_numbers_3 = "project/data/phone-numbers-3.txt"
-    # # route_costs_10 = "project/data/route-costs-100.txt"
-    # # phone_numbers_10 = "project/data/phone-numbers-100.txt"
-
-    # call_costs = reading_route(route_costs_4)
-    # print(len(call_costs))
-    # phone_numbers = reading_phone_numbers(phone_numbers_3)
-    # print(len(phone_numbers))
-    pass
-
+    
 
 if __name__ == "__main__":
     call_costs()
+
+
+
+'''
+Optimization Notes:
+Want to create an array of lenth 2 with routing number and its price, then load it into the Trie Tree
+    - This means reassigning the added array for each [route, cost] in the file that's being read in
+'''
