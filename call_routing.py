@@ -11,7 +11,7 @@ OUTPUT_FILE_FORMAT = 'call_costs/call-costs-{}.txt'
 # RUNTIME_SEPARATOR_FORMAT = "======================================== Scenario {scenario_num} ========================================"
 
 
-def reading_phone_numbers(file_name, num_phones=None):
+def read_phone_numbers(file_name, num_phones=None):
     '''
     Reading the phone numbers  from the text file and return
     list of phone numbers
@@ -62,6 +62,7 @@ def build_trie_with_routes(routes_and_prices):
 
 
 def find_call_costs_with_trie(route_tree, phone_numbers_list):
+    
     call_costs = []
     for phone_number in phone_numbers_list:
         cost = route_tree.search(str(phone_number))
@@ -81,28 +82,20 @@ def save_call_costs_to_file(phones_and_call_costs):
             file.write('+{}, {}\n'.format(phone_number, cost))
 
 
-    # print("route_tree: ", route_tree.size)
-    # phone = '34747997'  #0.26
-    # cost = route_tree.search(phone)
-    # print("cost: ", cost)
-
-
-def write_costs(list_of_phone_numbers, route_tree):
-    pass
-    # with open('call-costs{}.txt'.format(len(list_of_phone_numbers)), 'w') as file:
-    #     for phone_number in list_of_phone_numbers:
-    #         cost = route_tree.search(phone_number)
-    #         file.write('{}, {}'.format(phone_number, cost))
-
-
 def call_costs(num_routes, num_phones):
     """Return a price for each phone number"""
-    route_costs_100 = ROUTE_FILE_FORMAT.format(100)
-    route_costs_35000 = "project/data/route-costs-35000.txt"
-    route_costs_100k = "project/data/route-costs-106000.txt"
-    route_costs_1mln = "project/data/route-costs-1000000.txt"
-    route_costs_10mln = "project/data/route-costs-10000000.txt"
-    route_costs_4 = "project/data/route-costs-4.txt"
+    # route_costs_100 = ROUTE_FILE_FORMAT.format(100)
+    # route_costs_35000 = "project/data/route-costs-35000.txt"
+    # route_costs_100k = "project/data/route-costs-106000.txt"
+    # route_costs_1mln = "project/data/route-costs-1000000.txt"
+    # route_costs_10mln = "project/data/route-costs-10000000.txt"
+    # route_costs_4 = "project/data/route-costs-4.txt"
+
+    # phone_numbers_100 = "project/data/phone-numbers-100.txt"
+    # phone_numbers_1000 = "project/data/phone-numbers-1000.txt"
+    # phone_numbers_3 = "project/data/phone-numbers-3.txt"
+    # phone_numbers_1000 = "project/data/phone-numbers-1000.txt"
+    # phone_numbers_10k = "project/data/phone-numbers-10000.txt"
 
     start_time = time()
 
@@ -111,7 +104,7 @@ def call_costs(num_routes, num_phones):
     routes_and_prices = read_routes(route_costs)
 
     phone_numbers = PHONE_FILE_FORMAT.format(num_phones)
-    phone_numbers_list = reading_phone_numbers(phone_numbers, 3)
+    phone_numbers_list = read_phone_numbers(phone_numbers, 3)
 
     file_read_time = time() - start_time
     print(f"Time to read 2 files: {file_read_time}")
@@ -124,24 +117,20 @@ def call_costs(num_routes, num_phones):
     print(f"Time to build trie: {build_trie_time}")
     start_time = time()
 
-    phone_numbers_100 = "project/data/phone-numbers-100.txt"
-    phone_numbers_1000 = "project/data/phone-numbers-1000.txt"
-    phone_numbers_3 = "project/data/phone-numbers-3.txt"
-    phone_numbers_1000 = "project/data/phone-numbers-1000.txt"
-    phone_numbers_10k = "project/data/phone-numbers-10000.txt"
+    
 
     # Step 3: find call costs with trie
     call_costs = find_call_costs_with_trie(tree, phone_numbers_list)
     
     search_trie = time() - start_time
-    print(f"Time to Search trie: {search_trie}")
+    print(f"Time to search trie: {search_trie}")
     start_time = time()
 
 
     # Step 4: output results to a file
     save_call_costs_to_file(call_costs)
     save_call_cost_time = time() - start_time
-    print(f"Time to save_call_cost_time in trie: {save_call_cost_time}")
+    print(f"Time to save call cost time into file: {save_call_cost_time}")
     # start_time = time()
 
     overall_time = (file_read_time + build_trie_time + search_trie + save_call_cost_time)
