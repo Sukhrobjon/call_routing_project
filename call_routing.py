@@ -8,6 +8,8 @@ ROUTE_FILE_FORMAT = "project/data/route-costs-{}.txt"
 PHONE_FILE_FORMAT = "project/data/phone-numbers-{}.txt"
 OUTPUT_FILE_FORMAT = 'call_costs/call-costs-{}.txt'
 
+# RUNTIME_SEPARATOR_FORMAT = "======================================== Scenario {scenario_num} ========================================"
+
 
 def reading_phone_numbers(file_name, num_phones=None):
     '''
@@ -79,10 +81,10 @@ def save_call_costs_to_file(phones_and_call_costs):
             file.write('+{}, {}\n'.format(phone_number, cost))
 
 
-    print("route_tree: ", route_tree.size)
-    phone = '34747997'  #0.26
-    cost = route_tree.search(phone)
-    print("cost: ", cost)
+    # print("route_tree: ", route_tree.size)
+    # phone = '34747997'  #0.26
+    # cost = route_tree.search(phone)
+    # print("cost: ", cost)
 
 
 def write_costs(list_of_phone_numbers, route_tree):
@@ -109,7 +111,7 @@ def call_costs(num_routes, num_phones):
     routes_and_prices = read_routes(route_costs)
 
     phone_numbers = PHONE_FILE_FORMAT.format(num_phones)
-    phone_numbers_list = reading_phone_numbers(phone_numbers)
+    phone_numbers_list = reading_phone_numbers(phone_numbers, 3)
 
     file_read_time = time() - start_time
     print(f"Time to read 2 files: {file_read_time}")
@@ -130,18 +132,33 @@ def call_costs(num_routes, num_phones):
 
     # Step 3: find call costs with trie
     call_costs = find_call_costs_with_trie(tree, phone_numbers_list)
+    
+    search_trie = time() - start_time
+    print(f"Time to Search trie: {search_trie}")
+    start_time = time()
+
 
     # Step 4: output results to a file
     save_call_costs_to_file(call_costs)
+    save_call_cost_time = time() - start_time
+    print(f"Time to save_call_cost_time in trie: {save_call_cost_time}")
+    # start_time = time()
 
+    overall_time = (file_read_time + build_trie_time + search_trie + save_call_cost_time)
+
+    print(f'OverAll_time: {overall_time}')
     
 
 if __name__ == "__main__":
-    # scenario 1
-    call_costs(100, 1)
+    # scenario 2
+    
+
+    # print(RUNTIME_SEPARATOR_FORMAT.format("2"))
+    call_costs(106000, 1000) # search time => 0.00008511543273925781
+    
 
     # scenario 2
-    call_costs(100000, 1000)
+    # call_costs(100, 10)
 
 
 
