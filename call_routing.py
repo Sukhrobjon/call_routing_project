@@ -10,6 +10,7 @@ def reading_phone_numbers(file_name):
     with open(file_name) as f:
         # remove the '+' sign and reads new line
         f = f.read().replace('+', '').split('\n')
+
     return f
 
 def read_routes(file_name):
@@ -39,19 +40,27 @@ def load_routes(routes_and_prices):
     '''
     Load the routes from list of list into trie tree
     '''
-
     route_tree = TrieTree()
-    # i = 0
-    # while i < len(routes_and_prices) - 1:
-    #     route = routes_and_prices[i][i]
-    #     price = float(routes_and_prices[i][i+1])
-    #     route_tree.add(route, price)
-    #     i += 2
 
     for pair in routes_and_prices:
         route = pair[0]
         price = float(pair[1])
         route_tree.add(route, price)
+
+    phone_numbers_100 = "project/data/phone-numbers-100.txt"
+    phone_numbers_1000 = "project/data/phone-numbers-1000.txt"
+    phone_numbers_3 = "project/data/phone-numbers-3.txt"
+    phone_numbers_1000 = "project/data/phone-numbers-1000.txt"
+    phone_numbers_10k = "project/data/phone-numbers-10000.txt"
+    list_of_phone_numbers = reading_phone_numbers(phone_numbers_10k)
+
+    with open('call_costs/call-costs-{}.txt'.format(len(list_of_phone_numbers)), 'w') as file:
+        for phone_number in list_of_phone_numbers:
+            cost = route_tree.search(str(phone_number))
+            # print("phone#:", phone_number)
+            # print("cost:", cost)
+            file.write('+{}, {}\n'.format(phone_number, cost))
+
 
     print("route_tree: ", route_tree.size)
     phone = '34747997'  #0.26
@@ -60,16 +69,29 @@ def load_routes(routes_and_prices):
     return route_tree.size
 
 
+def write_costs(list_of_phone_numbers, route_tree):
+    pass
+    # with open('call-costs{}.txt'.format(len(list_of_phone_numbers)), 'w') as file:
+    #     for phone_number in list_of_phone_numbers:
+    #         cost = route_tree.search(phone_number)
+    #         file.write('{}, {}'.format(phone_number, cost))
+
 
 def call_costs():
     """Return a price for each phone number"""
     route_costs_100 = "project/data/route-costs-100.txt"
-    # phone_numbers_10 = "project/data/phone-numbers-100.txt"
+    route_costs_35000 = "project/data/route-costs-35000.txt"
+    route_costs_100k = "project/data/route-costs-106000.txt"
+    route_costs_1mln = "project/data/route-costs-1000000.txt"
+    route_costs_10mln = "project/data/route-costs-10000000.txt"
+    route_costs_4 = "project/data/route-costs-4.txt"
 
-    routes_and_prices = read_routes(route_costs_100)
-    route_tree = load_routes(routes_and_prices)
-    
-    return route_tree
+    routes_and_prices = read_routes(route_costs_10mln)
+    route_tree_size = load_routes(routes_and_prices)
+
+
+
+    return route_tree_size
 
     
 
