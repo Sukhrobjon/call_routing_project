@@ -7,6 +7,7 @@ class TrieNode(object):
         
         # initializing 10 children for each node because there are 10 digits possible
         self.children = [None] * 10
+        # self.children = {}  # key: digit, value: TrieNode (child)
         # default price is 0     
         self.price = 0
         # to indicate we traverse all the digits in the route
@@ -19,6 +20,13 @@ class TrieNode(object):
         """Return a string representation of this trie node."""
         return 'TrieNode({!r})'.format(self.children)
 
+    # def get_child(self, digit):
+    #     if isinstance(self.children, list):
+    #         self.children[int(digit)]
+    #     elif isinstance(self.children, dict):
+    #         self.children[digit]
+
+
 class TrieTree(object):
 
     def __init__(self, routes=None):
@@ -26,8 +34,8 @@ class TrieTree(object):
         self.root = TrieNode()
         self.size = 0
         if routes != None:
-            for route in routes:
-                self.add(route[0], route[1])
+            for route, price in routes:
+                self.add(route, price)
                 # self.size += 1
      
     def __repr__(self):
@@ -57,7 +65,7 @@ class TrieTree(object):
                 # we are end of the path
                 node.end_path = True
                 break 
-            # updating the node
+            # updating the node, move downward to child node
             node = node.children[int(digit)] 
             
     def search(self, phone_number):
