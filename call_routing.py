@@ -1,14 +1,10 @@
 from time import time
-# from __future__ import division
-# reading the file
 from trie_tree import TrieTree
 
 
 ROUTE_FILE_FORMAT = "project/data/route-costs-{}.txt"
 PHONE_FILE_FORMAT = "project/data/phone-numbers-{}.txt"
 OUTPUT_FILE_FORMAT = 'call_costs/call-costs-{}.txt'
-
-# RUNTIME_SEPARATOR_FORMAT = "======================================== Scenario {scenario_num} ========================================"
 
 
 def read_phone_numbers(file_name, num_phones=None):
@@ -25,24 +21,19 @@ def read_phone_numbers(file_name, num_phones=None):
 
 def read_routes(file_name):
     '''
-    Reading the route costs from the text file and return
-    dictionary {route#: cost}
+    Reading the route and costs from the text file and return
+    list of list
     '''
     with open(file_name) as f:
-
         list_of_routes = list()
-
         for line in f:
             pair = line.strip().split(',')
             route = pair[0].replace('+', '')
             price = pair[1]
 
             list_of_routes.append([route, price])
-
-            # route_tree.add(route_and_price[0], route_and_price[1])
-
-        print(len(list_of_routes))
-
+    
+    print(f"{len(list_of_routes)} of Routes.")
     return list_of_routes
 
 
@@ -62,7 +53,9 @@ def build_trie_with_routes(routes_and_prices):
 
 
 def find_call_costs_with_trie(route_tree, phone_numbers_list):
-    
+    '''
+    Search the trie filled with routes and return list of phone number associated its price
+    '''
     call_costs = []
     for phone_number in phone_numbers_list:
         cost = route_tree.search(str(phone_number))
@@ -84,21 +77,9 @@ def save_call_costs_to_file(phones_and_call_costs):
 
 def call_costs(num_routes, num_phones):
     """Return a price for each phone number"""
-    # route_costs_100 = ROUTE_FILE_FORMAT.format(100)
-    # route_costs_35000 = "project/data/route-costs-35000.txt"
-    # route_costs_100k = "project/data/route-costs-106000.txt"
-    # route_costs_1mln = "project/data/route-costs-1000000.txt"
-    # route_costs_10mln = "project/data/route-costs-10000000.txt"
-    # route_costs_4 = "project/data/route-costs-4.txt"
-
-    # phone_numbers_100 = "project/data/phone-numbers-100.txt"
-    # phone_numbers_1000 = "project/data/phone-numbers-1000.txt"
-    # phone_numbers_3 = "project/data/phone-numbers-3.txt"
-    # phone_numbers_1000 = "project/data/phone-numbers-1000.txt"
-    # phone_numbers_10k = "project/data/phone-numbers-10000.txt"
-
+    
     start_time = time()
-
+    
     # Step 1: read route costs and phone numbers
     route_costs = ROUTE_FILE_FORMAT.format(num_routes)
     routes_and_prices = read_routes(route_costs)
@@ -139,15 +120,24 @@ def call_costs(num_routes, num_phones):
     
 
 if __name__ == "__main__":
-    # scenario 2
     
-
+    # scenario 2
     # print(RUNTIME_SEPARATOR_FORMAT.format("2"))
-    call_costs(106000, 1000) # search time => 0.00008511543273925781
+    runtime_scen_2 = "======================================== Scenario 2 ========================================"
+    print(runtime_scen_2)
+    call_costs(106000, 1000) # average search time => 0.00008511543273925781
     
 
-    # scenario 2
-    # call_costs(100, 10)
+    # scenario 3
+    # runtime_scen_3 = "======================================== Scenario 3 ========================================"
+    # print(runtime_scen_3)
+    # call_costs(10000000, 10000)  # average search time => 0.0000629425048828125
+
+
+
+
+
+
 
 
 
@@ -155,4 +145,26 @@ if __name__ == "__main__":
 Optimization Notes:
 Want to create an array of lenth 2 with routing number and its price, then load it into the Trie Tree
     - This means reassigning the added array for each [route, cost] in the file that's being read in
+'''
+
+
+
+'''
+Runtime Example:
+
+======================================== Scenario 2 ========================================
+106680
+Time to read 2 files: 0.14192819595336914
+Time to build trie: 1.4554429054260254
+Time to search trie: 2.2172927856445312e-05
+Time to save call cost time into file: 0.0008361339569091797
+OverAll_time: 1.5982294082641602
+
+======================================== Scenario 3 ========================================
+9996000
+Time to read 2 files: 17.282543182373047
+Time to build trie: 115.71394801139832
+Time to search trie: 6.29425048828125e-05
+Time to save call cost time into file: 0.0033838748931884766
+OverAll_time: 132.99993801116943
 '''

@@ -20,12 +20,6 @@ class TrieNode(object):
         """Return a string representation of this trie node."""
         return 'TrieNode({!r})'.format(self.children)
 
-    # def get_child(self, digit):
-    #     if isinstance(self.children, list):
-    #         self.children[int(digit)]
-    #     elif isinstance(self.children, dict):
-    #         self.children[digit]
-
 
 class TrieTree(object):
 
@@ -36,7 +30,7 @@ class TrieTree(object):
         if routes != None:
             for route, price in routes:
                 self.add(route, price)
-                # self.size += 1
+    
      
     def __repr__(self):
         "return A string represention of the Trie tree"
@@ -74,12 +68,13 @@ class TrieTree(object):
         node = self.root
         price = 0
         for digit in phone_number:
+            digit = int(digit)
             # check if node exists where digit equals index
-            if node.children[int(digit)] != None: 
+            if node.children[digit] != None:
                 # setting the price before we see the fisrt unmatch
                 price = node.price
                 # print("each node price:", node.price)
-                node = node.children[int(digit)]
+                node = node.children[digit]
             else: # first unmatch digit and we break
                 # print("else each node price:", node.price)
                 break 
