@@ -2,6 +2,16 @@
 from trie_tree import TrieTree
 
 
+def reading_phone_numbers(file_name):
+    '''
+    Reading the phone numbers  from the text file and return
+    list of phone numbers
+    '''
+    with open(file_name) as f:
+        # remove the '+' sign and reads new line
+        f = f.read().replace('+', '').split('\n')
+    return f
+
 def read_routes(file_name):
     '''
     Reading the route costs from the text file and return
@@ -44,18 +54,11 @@ def load_routes(routes_and_prices):
         route_tree.add(route, price)
 
     print("route_tree: ", route_tree.size)
+    phone = '34747997'  #0.26
+    cost = route_tree.search(phone)
+    print("cost: ", cost)
     return route_tree.size
 
-
-def reading_phone_numbers(file_name):
-    '''
-    Reading the phone numbers  from the text file and return
-    list of phone numbers
-    '''
-    with open(file_name) as f:
-        # remove the '+' sign and reads new line
-        f = f.read().replace('+', '').split('\n')
-    return f
 
 
 def call_costs():
