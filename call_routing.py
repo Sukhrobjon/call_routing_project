@@ -128,7 +128,7 @@ if __name__ == "__main__":
     call_costs(106000, 1000) # average search time => 0.00008511543273925781
     
 
-    # scenario 3
+    ## scenario 3
     # runtime_scen_3 = "======================================== Scenario 3 ========================================"
     # print(runtime_scen_3)
     # call_costs(10000000, 10000)  # average search time => 0.0000629425048828125
@@ -143,8 +143,12 @@ if __name__ == "__main__":
 
 '''
 Optimization Notes:
-Want to create an array of lenth 2 with routing number and its price, then load it into the Trie Tree
+    Want to create an array of lenth 2 with routing number and its price, then load it into the Trie Tree
     - This means reassigning the added array for each [route, cost] in the file that's being read in
+
+    - While reading the file read as dictionary it might improve the run time.
+    and you dont have to validate the price and add smallest one
+
 '''
 
 
