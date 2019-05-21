@@ -129,9 +129,9 @@ if __name__ == "__main__":
     
 
     ## scenario 3
-    # runtime_scen_3 = "======================================== Scenario 3 ========================================"
-    # print(runtime_scen_3)
-    # call_costs(10000000, 10000)  # average search time => 0.0000629425048828125
+    runtime_scen_3 = "======================================== Scenario 3 ========================================"
+    print(runtime_scen_3)
+    call_costs(10000000, 10000)  # average search time => 0.0000629425048828125
 
 
 
